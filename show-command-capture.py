@@ -30,7 +30,6 @@ pass_wd = getpass.getpass("Password: ")
 commands = [{"cmd": "enable", "input": pass_wd},"show version"] #add further commands at the end of the list
 
 print "\nScript is capturing command output, please wait....\n"
-i = 0
 
 for device in devices:
     switch = pyeapi.connect(transport='https',host=device,username=user_id,password=pass_wd,enablepwd=pass_wd)
@@ -39,6 +38,7 @@ for device in devices:
     target = "https://{}:{}@{}/command-api".format(user_id, pass_wd, device)
     output = Server(target)
     response = output.runCmds(1, commands, "text")
+    i = 0
     while(i < len(response)-1):
         outfile = open(hostname+'_show-commands_output_'+localtime+'.txt', 'a')
         outfile.write("\nCOMMAND:- {} \n\n".format(commands[i+1]))
